@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>MSI 2020</title>
+		<!-- <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"> -->
+		<link rel="stylesheet" href="/src/css/style.css" />
+	</head>
+	<body>
+		<main class="conteiner">
+			<section id="conteiner_main">
+				<h3>MSI 2020</h3>
+				<h1>Hey!</h1>
+            <h2>Let`s try to find a joke for you:</h2>
+            
+				<div class="forms">
+					<form id="form" action="post">
+						<label for="radio_random">
+							<input
+								id="radio_random"
+								class="check"
+								type="radio"
+								checked
+								value="random"
+								name="radio input"
+							/>
+							Random
+						</label>
+
+						<label for="radio_categories">
+							<input
+								id="radio_categories"
+								class="check"
+								type="radio"
+								value="categories"
+								name="radio input"
+							/>
+							From categories
+						</label>
+						<div id="conteiner_categories"></div>
+						<label for="radio_search">
+							<input
+								id="radio_search"
+								class="check"
+								type="radio"
+								value="search"
+								name="radio input"
+							/>
+							Search
+						</label>
+						<label for="text_search">
+							<input
+								id="text_search"
+								type="search"
+								value=""
+								placeholder="Free text search..."
+								name="text input"
+								inputmode="search"
+							/>
+						</label>
+						<div class="box_button">
+							<input
+								id="button_get"
+								type="button"
+								name="getButton"
+                        value="Get a joke"
+							/>
+						</div>
+					</form>
+					<div id="conteiner_jokes"></div>
+				</div>
+			</section>
+			<section id="conteiner_favorite">Favorite
+            <div class="letter">
+               <img src="/src/icons/heart.svg" alt="">
+               <img src="/src/icons/favorite.svg" alt="">
+               <img src="/src/icons/message.svg" alt="">
+               <img src="/src/icons/link.svg" alt="">
+            </div>
+         </section>
+		</main>
+		<script src="/src/js/src.js"></script>
+	</body>
+</html>

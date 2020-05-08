@@ -1,0 +1,153 @@
+@import '/src/css/normalize.css';
+@import '/src/css/fonts.css';
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	margin-top: 2em;
+}
+
+h2 {
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 44px;
+	margin-top: -1em;
+}
+
+.conteiner {
+	display: flex;
+	/* flex-direction: row;
+	justify-content: center; */
+	min-height: 100%;
+	margin-left: 8.8em;
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: bold;
+	color: #333333;
+}
+
+#conteiner_main {
+	/* margin-top: 2.5em; */
+	width: 65%;
+	height: auto;
+	padding-left: 20px;
+	font-weight: normal;
+}
+
+#conteiner_favorite {
+	width: 35%;
+	min-height: 100%;
+	background: #f8f8f8;
+	/* display: none; */
+}
+
+form {
+	margin-top: 2.9em;
+}
+
+label {
+	font-size: 1.1em;
+	display: block;
+	margin-top: 1.3em;
+}
+
+.check {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+
+	box-sizing: border-box;
+
+	border: 2px solid #ababab;
+	transition: 0.2s all linear;
+	outline: none;
+	margin-right: 5px;
+
+	position: relative;
+	top: 4px;
+}
+
+.check:checked {
+	/* background-color: black; */
+	border: 5px solid #333333;
+	box-sizing: border-box;
+}
+
+#button_get {
+	width: 9.5em;
+	height: 2.6em;
+	background: linear-gradient(92.01deg, #8ea7ff 0%, #7291ff 100%);
+	border-radius: 10px;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 1em;
+	line-height: 1.4em;
+	outline: none;
+}
+
+#button_get:hover,
+#button_get:focus {
+	color: #333333;
+	box-sizing: border-box;
+}
+
+.box_button {
+	margin-top: 1.3em;
+}
+
+#text_search {
+	font-size: 1em;
+	width: 43em;
+	height: 2.6em;
+	border: 2px solid #333333;
+	border-radius: 10px;
+	padding-left: 10px;
+	display: none;
+	box-sizing: border-box;
+	outline: none;
+}
+
+::placeholder {
+	font-style: normal;
+	font-weight: normal;
+	color: #ababab;
+}
+
+#bubble_box {
+	display: none;
+	/* margin-top: 5em; */
+}
+
+.categories {
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	text-align: center;
+	color: #ababab;
+	font-size: 0.75em;
+	height: 1.8em;
+	margin-right: 3em;
+	margin-top: 3em;
+	border: 2px solid #f8f8f8;
+	box-sizing: border-box;
+	border-radius: 6px;
+	line-height: 1em;
+	outline: none;
+}
+
+.categories:hover,
+.categories:focus {
+	color: #333333;
+	background: #f8f8f8;
+	border: 2px solid #f8f8f8;
+	box-sizing: border-box;
+}
