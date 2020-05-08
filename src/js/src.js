@@ -9,14 +9,38 @@ let objUrl = {
 
 buildElements(objUrl.listCategories, addCategoryButtons);
 
-let viewData = (data) => {
-	data.result ? print(data.result) : print('NO');
-};
 
 function buildElements(url, fn) {
 	fetchAsync(url).then((data) => {
 		fn(data);
 	});
+}
+
+function responsePreprocessing(data) {
+	// if (!data) print('No such jokes were found.');
+	// if (data.result.length === 0) print('No such jokes were found.');
+
+	if (data.result) {
+		data.result.map((item) => buildElementWithJoke(item));
+	} else {
+		buildElementWithJoke(data);
+	}
+}
+
+function buildElementWithJoke(obj) {
+	let div = document.createElement('div');
+	
+	div.className = `conteiner_joke ${obj.id}`;
+	div.innerHTML = `<span class='letter'></span><p class='received_data link'>ID: <a href='${
+		obj.url
+	}'>${obj.id}</a><span class='link_icon'></span></p><span class='heart'></span>
+                     <p class='received_data text'>${obj.value}</p>
+							<p class='received_data timeAgo'>Last updated: ${calcHoursPastUpdate(
+								obj,
+								'updated_at',
+							)} hours ago</p><span class='labelCategory'>${obj.categories}</span>`;
+							
+	document.getElementById('conteiner_main').append(div);
 }
 
 const conteiner = document.querySelector('.conteiner');
@@ -108,5 +132,5 @@ conteiner.addEventListener('click', () => {
 });
 
 buttonGet.addEventListener('click', () => {
-	buildElements(url, viewData);
+	buildElements(url, responsePreprocessing);
 });
