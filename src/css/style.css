@@ -154,7 +154,7 @@ label {
 
 .conteiner_joke {
    width: 60%;
-   height: 14em;
+   min-height: 14em;
    background: #F8F8F8;
    border-radius: 20px;
    margin: 20px 0 20px 0;
@@ -164,7 +164,8 @@ label {
    align-items: flex-start;
    position: relative;
    padding-left: 6.3em;
-   padding-right: 2.5em;
+	padding-right: 2.5em;
+	
    text-align: start;
 }
 
@@ -231,7 +232,7 @@ color: #ABABAB;
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	color: #333333;
-	margin-left: 44em;
+	margin-left: 47em;
    padding: 4px 15px;
 }
 

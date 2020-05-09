@@ -16,9 +16,6 @@ function buildElements(url, fn) {
 }
 
 function responsePreprocessing(data) {
-	// if (!data) print('No such jokes were found.');
-	// if (data.result.length === 0) print('No such jokes were found.');
-
 	if (data.result) {
 		data.result.map((item) => buildElementWithJoke(item));
 	} else {
@@ -31,7 +28,7 @@ function buildElementWithJoke(obj) {
 	let category = ``;
 	if (obj.categories.length !== 0) {
 		category = `<span class='labelCategory'>${obj.categories}</span>`;
-	};
+	}
 
 	div.className = `conteiner_joke ${obj.id}`;
 	div.innerHTML = `<span class='letter'></span><p class='received_data link'>ID: <a href='${
@@ -132,8 +129,9 @@ conteiner.addEventListener('click', () => {
 	if (event.target.id === 'text_search') {
 		getShowValueFromTextArea(event.target);
 	}
+
+	if (event.target.id === 'button_get') {
+		buildElements(url, responsePreprocessing);
+	}
 });
 
-buttonGet.addEventListener('click', () => {
-	buildElements(url, responsePreprocessing);
-});
