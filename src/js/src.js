@@ -28,6 +28,10 @@ function responsePreprocessing(data) {
 
 function buildElementWithJoke(obj) {
 	let div = document.createElement('div');
+	let category = ``;
+	if (obj.categories.length !== 0) {
+		category = `<span class='labelCategory'>${obj.categories}</span>`;
+	};
 
 	div.className = `conteiner_joke ${obj.id}`;
 	div.innerHTML = `<span class='letter'></span><p class='received_data link'>ID: <a href='${
@@ -37,11 +41,9 @@ function buildElementWithJoke(obj) {
 							<span class='received_data timeAgo'>Last updated: ${calcHoursPastUpdate(
 								obj,
 								'updated_at',
-							)} hours ago<span class='labelCategory'>${
-		obj.categories
-	}</span></span>`;
+							)} hours ago ${category} </span>`;
 
-	document.getElementById('conteiner_jokes').append(div);
+	document.getElementById('conteiner_jokes').prepend(div);
 }
 
 const conteiner = document.querySelector('.conteiner');
