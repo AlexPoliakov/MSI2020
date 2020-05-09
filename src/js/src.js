@@ -9,7 +9,6 @@ let objUrl = {
 
 buildElements(objUrl.listCategories, addCategoryButtons);
 
-
 function buildElements(url, fn) {
 	fetchAsync(url).then((data) => {
 		fn(data);
@@ -29,18 +28,20 @@ function responsePreprocessing(data) {
 
 function buildElementWithJoke(obj) {
 	let div = document.createElement('div');
-	
+
 	div.className = `conteiner_joke ${obj.id}`;
 	div.innerHTML = `<span class='letter'></span><p class='received_data link'>ID: <a href='${
 		obj.url
 	}'>${obj.id}</a><span class='link_icon'></span></p><span class='heart'></span>
                      <p class='received_data text'>${obj.value}</p>
-							<p class='received_data timeAgo'>Last updated: ${calcHoursPastUpdate(
+							<span class='received_data timeAgo'>Last updated: ${calcHoursPastUpdate(
 								obj,
 								'updated_at',
-							)} hours ago</p><span class='labelCategory'>${obj.categories}</span>`;
-							
-	document.getElementById('conteiner_main').append(div);
+							)} hours ago<span class='labelCategory'>${
+		obj.categories
+	}</span></span>`;
+
+	document.getElementById('conteiner_jokes').append(div);
 }
 
 const conteiner = document.querySelector('.conteiner');
