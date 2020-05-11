@@ -25,18 +25,24 @@ h2 {
 	/* flex-direction: row;
 	justify-content: center; */
 	min-height: 100%;
-	margin-left: 8.8em;
+	/* margin-left: 8.8em; */
 	font-family: Roboto;
 	font-style: normal;
 	font-weight: bold;
 	color: #333333;
 }
 
+.box_main,
+.box_favourite {
+	width: 80%;
+	margin: 0 auto;
+}
+
 #conteiner_main {
 	/* margin-top: 2.5em; */
 	width: 65%;
 	height: auto;
-	padding-left: 20px;
+	/* padding-left: 20px; */
 	font-weight: normal;
 }
 
@@ -44,7 +50,7 @@ h2 {
 	width: 35%;
 	min-height: 100%;
 	background: #f8f8f8;
-	/* display: none; */
+	display: none; 
 }
 
 form {
@@ -153,7 +159,7 @@ label {
 }
 
 .conteiner_joke {
-   width: 60%;
+   /* width: 60%; */
    min-height: 14em;
    background: #F8F8F8;
    border-radius: 20px;
@@ -232,8 +238,9 @@ color: #ABABAB;
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	color: #333333;
-	margin-left: 47em;
-   padding: 4px 15px;
+	padding: 4px 15px;
+	position: absolute;
+	right: 2.5em;
 }
 
 span {
@@ -244,3 +251,10 @@ span {
 	color: #ABABAB;
 	font-size: 1.3em;
 }
+
+/* #conteiner_favourite_jockes {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: flex-start;
+} */

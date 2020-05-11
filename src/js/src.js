@@ -26,14 +26,14 @@ function responsePreprocessing(data) {
 function buildElementWithJoke(obj) {
 	let div = document.createElement('div');
 	let category = ``;
-	if (obj.categories.length !== 0) {
+	if (obj.categories.length > 0) {
 		category = `<span class='labelCategory'>${obj.categories}</span>`;
 	}
 
 	div.className = `conteiner_joke ${obj.id}`;
 	div.innerHTML = `<span class='letter'></span><p class='received_data link'>ID: <a href='${
 		obj.url
-	}'>${obj.id}</a><span class='link_icon'></span></p><span class='heart'></span>
+	}'>${obj.id}</a><span class='link_icon'></span></p><span id='${obj.id}' class='heart'></span>
                      <p class='received_data text'>${obj.value}</p>
 							<span class='received_data timeAgo'>Last updated: ${calcHoursPastUpdate(
 								obj,
@@ -53,6 +53,7 @@ const radioCategories = document.getElementById('radio_categories');
 const fieldTextSearch = document.getElementById('text_search');
 const buttonGet = document.getElementById('button_get');
 const categories = document.getElementById('conteiner_categories');
+const conteinerFavourite = document.getElementById('conteiner_favourite');
 
 let url = objUrl.randomUrl;
 
@@ -100,6 +101,20 @@ let getShowValueFromTextArea = (elem) => {
 	});
 };
 
+let addElemToFavouriteList = (elem) => {
+	elem.style.backgroundImage = `url('/src/icons/favourite.svg')`;
+	let copyElem = elem.parentNode.cloneNode(true);
+	copyElem.style.backgroundColor = '#FFFFFF';
+	copyElem.firstChild.style.backgroundImage = `url('/src/icons/messageGray.svg')`;
+	if (copyElem.querySelector('.labelCategory')) {
+		copyElem.querySelector('.labelCategory').style.display = 'none';
+	}
+		
+
+	showHideElements(conteinerFavourite, 'flex');
+	document.getElementById('conteiner_favourite_jockes').prepend(copyElem);
+}
+
 conteiner.addEventListener('click', () => {
 	if (radioSearch.checked && event.target === radioSearch) {
 		showHideElements(fieldTextSearch, 'block');
@@ -132,6 +147,10 @@ conteiner.addEventListener('click', () => {
 
 	if (event.target.id === 'button_get') {
 		buildElements(url, responsePreprocessing);
+	}
+
+	if (event.target.className === 'heart') {
+		addElemToFavouriteList(event.target);
 	}
 });
 
