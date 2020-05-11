@@ -30,10 +30,12 @@ function buildElementWithJoke(obj) {
 		category = `<span class='labelCategory'>${obj.categories}</span>`;
 	}
 
-	div.className = `conteiner_joke ${obj.id}`;
+	div.className = `conteiner_joke`;
 	div.innerHTML = `<span class='letter'></span><p class='received_data link'>ID: <a href='${
 		obj.url
-	}'>${obj.id}</a><span class='link_icon'></span></p><span id='${obj.id}' class='heart'></span>
+	}'>${obj.id}</a><span class='link_icon'></span></p><span id='id${
+		obj.id
+	}' class='heart id${obj.id}'></span>
                      <p class='received_data text'>${obj.value}</p>
 							<span class='received_data timeAgo'>Last updated: ${calcHoursPastUpdate(
 								obj,
@@ -102,18 +104,36 @@ let getShowValueFromTextArea = (elem) => {
 };
 
 let addElemToFavouriteList = (elem) => {
-	elem.style.backgroundImage = `url('/src/icons/favourite.svg')`;
+	elem.classList.toggle('favourite');
 	let copyElem = elem.parentNode.cloneNode(true);
-	copyElem.style.backgroundColor = '#FFFFFF';
-	copyElem.firstChild.style.backgroundImage = `url('/src/icons/messageGray.svg')`;
+	copyElem.querySelector('.heart').id = '';
+	copyElem.classList.add('back_color');
+	copyElem.firstChild.classList.add('message_change');
+
 	if (copyElem.querySelector('.labelCategory')) {
 		copyElem.querySelector('.labelCategory').style.display = 'none';
 	}
-		
 
 	showHideElements(conteinerFavourite, 'flex');
 	document.getElementById('conteiner_favourite_jockes').prepend(copyElem);
-}
+};
+
+let removeElemFromFavouriteList = (elem) => {
+	let classElem = '';
+	elem.classList.forEach((item) => {
+		if (item !== 'heart' && item !== 'favourite') {
+			classElem = item;
+		}
+	});
+
+	document.querySelectorAll(`.${classElem}`).forEach((item) => {
+		if (item.id !== classElem) {
+			item.parentNode.remove();
+		} else {
+			item.classList.toggle('favourite');
+		}
+	});
+};
 
 conteiner.addEventListener('click', () => {
 	if (radioSearch.checked && event.target === radioSearch) {
@@ -149,8 +169,11 @@ conteiner.addEventListener('click', () => {
 		buildElements(url, responsePreprocessing);
 	}
 
-	if (event.target.className === 'heart') {
-		addElemToFavouriteList(event.target);
+	if (event.target.classList.contains('heart')) {
+		if (event.target.classList.contains('favourite')) {
+			removeElemFromFavouriteList(event.target);
+		} else {
+			addElemToFavouriteList(event.target);
+		}
 	}
 });
-
