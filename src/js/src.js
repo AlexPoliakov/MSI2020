@@ -1,5 +1,6 @@
 let print = (some) => console.log(some);
 
+
 let objUrl = {
 	randomUrl: 'https://api.chucknorris.io/jokes/random',
 	categoryUrl: 'https://api.chucknorris.io/jokes/random?category=',
@@ -26,7 +27,7 @@ function responsePreprocessing(data) {
 function buildElementWithJoke(obj) {
 	let div = document.createElement('div');
 	let category = ``;
-	if (obj.categories.length > 0) {
+	if (obj.categories.length) {
 		category = `<span class='labelCategory'>${obj.categories}</span>`;
 	}
 
@@ -56,6 +57,7 @@ const fieldTextSearch = document.getElementById('text_search');
 const buttonGet = document.getElementById('button_get');
 const categories = document.getElementById('conteiner_categories');
 const conteinerFavourite = document.getElementById('conteiner_favourite');
+const conteinerFavouriteJockes = document.getElementById('conteiner_favourite_jockes');
 
 let url = objUrl.randomUrl;
 
@@ -106,6 +108,7 @@ let getShowValueFromTextArea = (elem) => {
 let addElemToFavouriteList = (elem) => {
 	elem.classList.toggle('favourite');
 	let copyElem = elem.parentNode.cloneNode(true);
+	let keyForLocalStorage = copyElem.querySelector('.heart').id;
 	copyElem.querySelector('.heart').id = '';
 	copyElem.classList.add('back_color');
 	copyElem.firstChild.classList.add('message_change');
@@ -113,9 +116,10 @@ let addElemToFavouriteList = (elem) => {
 	if (copyElem.querySelector('.labelCategory')) {
 		copyElem.querySelector('.labelCategory').style.display = 'none';
 	}
-
+	
 	showHideElements(conteinerFavourite, 'flex');
-	document.getElementById('conteiner_favourite_jockes').prepend(copyElem);
+	conteinerFavouriteJockes.prepend(copyElem);
+	saveToLocalStorage(copyElem.parentNode);
 };
 
 let removeElemFromFavouriteList = (elem) => {
@@ -133,7 +137,26 @@ let removeElemFromFavouriteList = (elem) => {
 			item.classList.toggle('favourite');
 		}
 	});
+
+	if (!conteinerFavouriteJockes.hasChildNodes()) {
+		showHideElements(conteinerFavourite, 'none');
+	};
+	saveToLocalStorage(conteinerFavouriteJockes);
 };
+
+function saveToLocalStorage(elem) {
+	localStorage.setItem('favouriteList', elem.innerHTML);
+}
+
+function readFromLocalStorage() {
+	if (!localStorage.favouriteList) return;
+	
+	showHideElements(conteinerFavourite, 'flex');
+	document.getElementById(
+		'conteiner_favourite_jockes',
+	).innerHTML = localStorage.getItem('favouriteList');
+}
+readFromLocalStorage();
 
 conteiner.addEventListener('click', () => {
 	if (radioSearch.checked && event.target === radioSearch) {
