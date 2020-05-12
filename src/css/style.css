@@ -149,8 +149,15 @@ label {
 	outline: none;
 }
 
-.categories:hover,
+/* .categories:hover,
 .categories:focus {
+	color: #333333;
+	background: #f8f8f8;
+	border: 2px solid #f8f8f8;
+	box-sizing: border-box;
+} */
+
+.active_button {
 	color: #333333;
 	background: #f8f8f8;
 	border: 2px solid #f8f8f8;

@@ -1,5 +1,9 @@
 let print = (some) => console.log(some);
 
+document.addEventListener('DOMContentLoaded', (event) => {
+	readFromLocalStorage();
+	buildElements(objUrl.listCategories, addCategoryButtons);
+});
 
 let objUrl = {
 	randomUrl: 'https://api.chucknorris.io/jokes/random',
@@ -8,7 +12,7 @@ let objUrl = {
 	listCategories: 'https://api.chucknorris.io/jokes/categories',
 };
 
-buildElements(objUrl.listCategories, addCategoryButtons);
+
 
 function buildElements(url, fn) {
 	fetchAsync(url).then((data) => {
@@ -42,10 +46,15 @@ function buildElementWithJoke(obj) {
 								obj,
 								'updated_at',
 							)} hours ago ${category} </span>`;
-
+	
+	if (listId.has(div.querySelector('.heart').id)) {
+		div.querySelector('.heart').classList.toggle('favourite');
+	}
 	document.getElementById('conteiner_jokes').prepend(div);
 }
 
+let listId = new Set();
+const categories = document.getElementById('conteiner_categories');
 const conteiner = document.querySelector('.conteiner');
 let bubble_box = setTimeout(() => {
 	bubble_box = document.getElementById('bubble_box');
@@ -55,9 +64,8 @@ const radioSearch = document.getElementById('radio_search');
 const radioCategories = document.getElementById('radio_categories');
 const fieldTextSearch = document.getElementById('text_search');
 const buttonGet = document.getElementById('button_get');
-const categories = document.getElementById('conteiner_categories');
 const conteinerFavourite = document.getElementById('conteiner_favourite');
-const conteinerFavouriteJockes = document.getElementById('conteiner_favourite_jockes');
+const conteinerFavouriteJokes = document.getElementById('conteiner_favourite_jockes');
 
 let url = objUrl.randomUrl;
 
@@ -80,14 +88,19 @@ function addCategoryButtons(arr) {
 	categories.innerHTML = `<div id='bubble_box'>${result}</div>`;
 }
 
-let removeElements = (id) => {
-	let elem = document.getElementById(id);
-	elem.remove();
-};
-
 let showHideElements = (elem, state) => {
 	elem.style.display = state;
 };
+
+let clearActiveButton = (selector) => {
+	if (!conteiner.querySelector(`.${selector}`)) return;
+	conteiner.querySelector(`.${selector}`).classList.toggle(selector);
+}
+
+let changeViewActiveButton = (elem, selector) => {
+	clearActiveButton(selector);
+	elem.classList.toggle(selector);
+}
 
 let calcHoursPastUpdate = (obj, prop) => {
 	let dataUpdate = new Date(Date.parse(obj[prop]));
@@ -118,7 +131,7 @@ let addElemToFavouriteList = (elem) => {
 	}
 	
 	showHideElements(conteinerFavourite, 'flex');
-	conteinerFavouriteJockes.prepend(copyElem);
+	conteinerFavouriteJokes.prepend(copyElem);
 	saveToLocalStorage(copyElem.parentNode);
 };
 
@@ -130,6 +143,9 @@ let removeElemFromFavouriteList = (elem) => {
 		}
 	});
 
+	if (listId.has(classElem)) listId.delete(classElem);
+	
+
 	document.querySelectorAll(`.${classElem}`).forEach((item) => {
 		if (item.id !== classElem) {
 			item.parentNode.remove();
@@ -138,25 +154,34 @@ let removeElemFromFavouriteList = (elem) => {
 		}
 	});
 
-	if (!conteinerFavouriteJockes.hasChildNodes()) {
+	if (!conteinerFavouriteJokes.hasChildNodes()) {
 		showHideElements(conteinerFavourite, 'none');
 	};
-	saveToLocalStorage(conteinerFavouriteJockes);
+	saveToLocalStorage(conteinerFavouriteJokes);
 };
 
 function saveToLocalStorage(elem) {
 	localStorage.setItem('favouriteList', elem.innerHTML);
 }
 
+function createListIdOfLocalStorage(elem) {
+	elem.querySelectorAll('.heart').forEach((item) => {
+		item.classList.forEach((item) => {
+			if (item !== 'heart' && item !== 'favourite') {
+				listId.add(item);
+			}
+		});
+	});
+}
+
 function readFromLocalStorage() {
 	if (!localStorage.favouriteList) return;
 	
 	showHideElements(conteinerFavourite, 'flex');
-	document.getElementById(
-		'conteiner_favourite_jockes',
-	).innerHTML = localStorage.getItem('favouriteList');
+	conteinerFavouriteJokes.innerHTML = localStorage.getItem('favouriteList');
+	
+	createListIdOfLocalStorage(conteinerFavouriteJokes);
 }
-readFromLocalStorage();
 
 conteiner.addEventListener('click', () => {
 	if (radioSearch.checked && event.target === radioSearch) {
@@ -169,6 +194,7 @@ conteiner.addEventListener('click', () => {
 
 	if (radioCategories.checked && event.target === radioCategories) {
 		showHideElements(bubble_box, 'block');
+		clearActiveButton('active_button');
 		buttonGet.disabled = true;
 	} else if (!radioCategories.checked) {
 		showHideElements(bubble_box, 'none');
@@ -180,6 +206,7 @@ conteiner.addEventListener('click', () => {
 	}
 
 	if (event.target.name === 'categoryButton') {
+		changeViewActiveButton(event.target, 'active_button');
 		url = objUrl.categoryUrl + event.target.value;
 		buttonGet.disabled = false;
 	}
