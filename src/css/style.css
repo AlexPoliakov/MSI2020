@@ -20,7 +20,7 @@ h2 {
 	margin-top: -1em;
 }
 
-.conteiner {
+.container {
 	display: flex;
 	min-height: 100%;
 	font-family: Roboto;
@@ -42,7 +42,7 @@ h2 {
 	margin: 0 auto;
 }
 
-#conteiner_main {
+#container_main {
 	min-width: 65%;
 	min-height: 100%;
 	font-weight: normal;
@@ -60,7 +60,7 @@ h2 {
 	visibility: hidden;
 }
 
-.conteiner_favourite {
+.container_favourite {
 	min-width: 34%;
 	min-height: 100%;
 	background: #f8f8f8;
@@ -69,13 +69,13 @@ h2 {
 }
 
 form {
-	margin-top: 2.9em;
+	margin-top: 2.5em;
 }
 
 label {
 	font-size: 1.1em;
 	display: block;
-	margin-top: 1.3em;
+	margin-top: 0.7em;
 }
 
 .check {
@@ -122,7 +122,8 @@ label {
 }
 
 .box_button {
-	margin-top: 1.3em;
+	margin-top: 1.4em;
+	margin-bottom: 2.5em;
 }
 
 #text_search {
@@ -143,7 +144,7 @@ label {
 	color: #ababab;
 }
 
-#bubble_box {
+#categories_box {
 	display: none;
 }
 
@@ -177,7 +178,7 @@ label {
 	box-sizing: border-box;
 }
 
-.conteiner_joke {
+.container_joke {
 	min-height: 10em;
 	background: #f8f8f8;
 	border-radius: 20px;
@@ -282,7 +283,7 @@ span {
 	background-image: url('../icons/favourite.svg');
 }
 
-.back_color {
+.container_joke_favour {
 	background-color: #ffffff;
 	font-size: 14px;
 	line-height: 20px;

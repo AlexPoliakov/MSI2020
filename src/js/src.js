@@ -33,7 +33,7 @@ function buildElementWithJoke(obj) {
 		category = `<span class='labelCategory'>${obj.categories}</span>`;
 	}
 
-	div.className = `conteiner_joke`;
+	div.className = `container_joke`;
 	div.innerHTML = `<span class='letter'></span><p class='link'>ID: <a href='${
 		obj.url
 	}'>${obj.id}</a><span class='link_icon'></span></p><span id='id${
@@ -48,26 +48,26 @@ function buildElementWithJoke(obj) {
 	if (listId.has(div.querySelector('.heart').id)) {
 		div.querySelector('.heart').classList.toggle('favourite');
 	}
-	document.getElementById('conteiner_jokes').prepend(div);
+	document.getElementById('container_jokes').prepend(div);
 }
 
 let listId = new Set();
-const categories = document.getElementById('conteiner_categories');
-const conteiner = document.querySelector('.conteiner');
-let bubble_box = setTimeout(() => {
-	bubble_box = document.getElementById('bubble_box');
+const categories = document.getElementById('container_categories');
+const container = document.querySelector('.container');
+let categories_box = setTimeout(() => {
+	categories_box = document.getElementById('categories_box');
 }, 1000);
 const radioRandom = document.getElementById('radio_random');
 const radioSearch = document.getElementById('radio_search');
 const radioCategories = document.getElementById('radio_categories');
 const fieldTextSearch = document.getElementById('text_search');
 const buttonGet = document.getElementById('button_get');
-const conteinerFavourite = document.querySelector('.conteiner_favourite');
-const conteinerFavouriteJokes = document.getElementById(
-	'conteiner_favourite_jockes',
+const containerFavourite = document.querySelector('.container_favourite');
+const containerFavouriteJokes = document.getElementById(
+	'container_favourite_jockes',
 );
 const boxMain = document.querySelector('.box_main');
-const containerMain = document.querySelector('#conteiner_main');
+const containerMain = document.querySelector('#container_main');
 
 let url = objUrl.randomUrl;
 
@@ -87,20 +87,20 @@ function addCategoryButtons(arr) {
 		result += `<input id='${item}' class='categories' name='categoryButton' value='${item}'/>`;
 	});
 
-	categories.innerHTML = `<div id='bubble_box'>${result}</div>`;
+	categories.innerHTML = `<div id='categories_box'>${result}</div>`;
 }
 
 let showHideElements = (elem, state) => {
 	elem.style.display = state;
 };
 
-let showHideElemWithCSS = (elem, selector) => {
+let showHideElemWithClassName = (elem, selector) => {
 	elem.classList.toggle(selector);
 };
 
 let clearActiveButton = (selector) => {
-	if (!conteiner.querySelector(`.${selector}`)) return;
-	conteiner.querySelector(`.${selector}`).classList.toggle(selector);
+	if (!container.querySelector(`.${selector}`)) return;
+	container.querySelector(`.${selector}`).classList.toggle(selector);
 };
 
 let changeViewActiveButton = (elem, selector) => {
@@ -129,18 +129,18 @@ let addElemToFavouriteList = (elem) => {
 	let copyElem = elem.parentNode.cloneNode(true);
 
 	copyElem.querySelector('.heart').id = '';
-	copyElem.classList.add('back_color');
+	copyElem.classList.add('container_joke_favour');
 	copyElem.firstChild.classList.add('message_change');
 
 	if (copyElem.querySelector('.labelCategory')) {
 		copyElem.querySelector('.labelCategory').style.display = 'none';
 	}
 
-	if (!conteinerFavourite.classList.contains('visible')) {
-		showHideElemWithCSS(conteinerFavourite, 'visible');
+	if (!containerFavourite.classList.contains('visible')) {
+		showHideElemWithClassName(containerFavourite, 'visible');
 	}
 
-	conteinerFavouriteJokes.prepend(copyElem);
+	containerFavouriteJokes.prepend(copyElem);
 	saveToLocalStorage(copyElem.parentNode);
 };
 
@@ -162,11 +162,11 @@ let removeElemFromFavouriteList = (elem) => {
 		}
 	});
 
-	if (!conteinerFavouriteJokes.hasChildNodes()) {
-		showHideElemWithCSS(conteinerFavourite, 'visible');
+	if (!containerFavouriteJokes.hasChildNodes()) {
+		showHideElemWithClassName(containerFavourite, 'visible');
 	}
 
-	saveToLocalStorage(conteinerFavouriteJokes);
+	saveToLocalStorage(containerFavouriteJokes);
 };
 
 function saveToLocalStorage(elem) {
@@ -186,13 +186,13 @@ function createListIdOfLocalStorage(elem) {
 function readFromLocalStorage() {
 	if (!localStorage.favouriteList) return;
 
-	showHideElemWithCSS(conteinerFavourite, 'visible');
-	conteinerFavouriteJokes.innerHTML = localStorage.getItem('favouriteList');
+	showHideElemWithClassName(containerFavourite, 'visible');
+	containerFavouriteJokes.innerHTML = localStorage.getItem('favouriteList');
 
-	createListIdOfLocalStorage(conteinerFavouriteJokes);
+	createListIdOfLocalStorage(containerFavouriteJokes);
 }
 
-conteiner.addEventListener('click', () => {
+container.addEventListener('click', () => {
 	let elem = event.target;
 	if (radioSearch.checked && elem === radioSearch) {
 		showHideElements(fieldTextSearch, 'block');
@@ -203,11 +203,11 @@ conteiner.addEventListener('click', () => {
 	}
 
 	if (radioCategories.checked && elem === radioCategories) {
-		showHideElements(bubble_box, 'block');
+		showHideElements(categories_box, 'block');
 		clearActiveButton('active_button');
 		buttonGet.disabled = true;
 	} else if (!radioCategories.checked) {
-		showHideElements(bubble_box, 'none');
+		showHideElements(categories_box, 'none');
 	}
 
 	if (radioRandom.checked) {
@@ -238,14 +238,14 @@ conteiner.addEventListener('click', () => {
 	}
 
 	if (elem.className === 'button_main' || elem.className === 'open') {
-		showHideElemWithCSS(conteinerFavourite, 'tablet');
-		showHideElemWithCSS(boxMain, 'freezing');
-		showHideElemWithCSS(containerMain, 'color_freez');
+		showHideElemWithClassName(containerFavourite, 'tablet');
+		showHideElemWithClassName(boxMain, 'freezing');
+		showHideElemWithClassName(containerMain, 'color_freez');
 	}
 
 	if (elem.className === 'name_favourite' || elem.className === 'close') {
-		showHideElemWithCSS(conteinerFavourite, 'tablet');
-		showHideElemWithCSS(boxMain, 'freezing');
-		showHideElemWithCSS(containerMain, 'color_freez');
+		showHideElemWithClassName(containerFavourite, 'tablet');
+		showHideElemWithClassName(boxMain, 'freezing');
+		showHideElemWithClassName(containerMain, 'color_freez');
 	}
 });

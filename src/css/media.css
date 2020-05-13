@@ -15,10 +15,11 @@
 	}
 
 	.name_favourite {
-		text-align: end;
+      text-align: end;
+      margin-bottom: 2.5em;
 	}
 
-	.conteiner_favourite {
+	.container_favourite {
 		min-width: 57%;
 		overflow: hidden;
 		z-index: 10000;
@@ -33,7 +34,7 @@
 		visibility: visible;
 	}
 
-	#conteiner_main {
+	#container_main {
 		width: 100%;
 		min-width: auto;
 	}
@@ -42,5 +43,41 @@
 		width: 90%;
 		left: 0;
 		right: 0;
+   }
+
+   .categories {
+      max-width: 7.2em;
+      margin-right: 1.5em;
+      margin-top: 1.5em;
+   }
+   
+}
+
+@media (max-width: 580px) {
+   .container_favourite {
+      min-width: 75%;
+   }
+}
+
+@media (max-width: 450px) {
+   .container_favourite {
+      min-width: 100%;
+   }
+
+   .box_favourite {
+      width: 90%;
+   }
+
+   .timeAgo {
+      margin-bottom: 1.3em;
+   }
+
+   .labelCategory {
+      right: 15.6em;
+      bottom: 1.5em;
+   }
+
+   .name_favourite {
+      margin-bottom: 2.5em;
 	}
 }
