@@ -20,10 +20,6 @@ h2 {
 	margin-top: -1em;
 }
 
-.visible {
-	display: flex;
-}
-
 .conteiner {
 	display: flex;
 	min-height: 100%;
@@ -47,36 +43,26 @@ h2 {
 }
 
 #conteiner_main {
-	/* width: 65%; */
-	/* height: auto; */
-	font-weight: normal;
-}
-
-#hidden_main {
-	width: 65%;
+	min-width: 65%;
 	min-height: 100%;
+	font-weight: normal;
 }
 
 .head_main {
 	display: flex;
-   justify-content: space-between;
-   align-items: baseline;
+	justify-content: space-between;
+	align-items: baseline;
 }
 
-.name_main_favourite {
+.button_main {
 	color: #ababab;
 	font-size: 1.3em;
 	visibility: hidden;
 }
 
-.hidden_favourite {
-	width: 38%;
+.conteiner_favourite {
+	min-width: 34%;
 	min-height: 100%;
-}
-
-#conteiner_favourite {
-	/* min-width: 35%; */
-	min-height: 100%; 
 	background: #f8f8f8;
 	display: none;
 	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -113,7 +99,6 @@ label {
 }
 
 .check:checked {
-	/* background-color: black; */
 	border: 5px solid #333333;
 	box-sizing: border-box;
 }
@@ -193,8 +178,7 @@ label {
 }
 
 .conteiner_joke {
-	/* width: 60%; */
-	min-height: 11em;
+	min-height: 10em;
 	background: #f8f8f8;
 	border-radius: 20px;
 	margin: 20px 0 20px 0;
@@ -216,6 +200,7 @@ label {
 	font-size: 0.63em;
 	line-height: 0.88em;
 	color: #ababab;
+	margin-bottom: 0;
 }
 
 a {
@@ -229,6 +214,7 @@ a {
 	line-height: 1.6em;
 	color: #333333;
 	align-items: center;
+	margin-top: 0.31em;
 }
 
 .timeAgo {
@@ -283,10 +269,13 @@ span {
 	display: inline-block;
 }
 
-.name_favourite {
+.name_favourite,
+.button_main {
 	color: #ababab;
 	font-size: 1.3em;
-	/* justify-content: start; */
+	font-style: normal;
+	font-weight: 500;
+	line-height: 28px;
 }
 
 .favourite {
@@ -295,10 +284,14 @@ span {
 
 .back_color {
 	background-color: #ffffff;
+	font-size: 14px;
+	line-height: 20px;
+	min-height: 9em;
 }
 
 .message_change {
 	background-image: url('../icons/messageGray.svg');
+	top: 3.8em;
 }
 
 .open,
@@ -312,13 +305,22 @@ span {
 
 .open {
 	background-image: url('../icons/opening.svg');
-	
 }
 
 .close {
 	background-image: url('../icons/closing.svg');
-	visibility: hidden;
+	display: none;
 }
 
+.visible {
+	display: flex;
+}
 
+.freezing {
+	position: fixed;
+	pointer-events: none;
+}
 
+.color_freez {
+	background: rgba(0, 0, 0, 0.3);
+}

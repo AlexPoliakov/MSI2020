@@ -12,8 +12,6 @@ let objUrl = {
 	listCategories: 'https://api.chucknorris.io/jokes/categories',
 };
 
-
-
 function buildElements(url, fn) {
 	fetchAsync(url).then((data) => {
 		fn(data);
@@ -36,17 +34,17 @@ function buildElementWithJoke(obj) {
 	}
 
 	div.className = `conteiner_joke`;
-	div.innerHTML = `<span class='letter'></span><p class='received_data link'>ID: <a href='${
+	div.innerHTML = `<span class='letter'></span><p class='link'>ID: <a href='${
 		obj.url
 	}'>${obj.id}</a><span class='link_icon'></span></p><span id='id${
 		obj.id
 	}' class='heart id${obj.id}'></span>
-                     <p class='received_data text'>${obj.value}</p>
-							<span class='received_data timeAgo'>Last updated: ${calcHoursPastUpdate(
+                     <p class='text'>${obj.value}</p>
+							<span class='timeAgo'>Last updated: ${calcHoursPastUpdate(
 								obj,
 								'updated_at',
 							)} hours ago ${category} </span>`;
-	
+
 	if (listId.has(div.querySelector('.heart').id)) {
 		div.querySelector('.heart').classList.toggle('favourite');
 	}
@@ -64,8 +62,12 @@ const radioSearch = document.getElementById('radio_search');
 const radioCategories = document.getElementById('radio_categories');
 const fieldTextSearch = document.getElementById('text_search');
 const buttonGet = document.getElementById('button_get');
-const conteinerFavourite = document.getElementById('conteiner_favourite');
-const conteinerFavouriteJokes = document.getElementById('conteiner_favourite_jockes');
+const conteinerFavourite = document.querySelector('.conteiner_favourite');
+const conteinerFavouriteJokes = document.getElementById(
+	'conteiner_favourite_jockes',
+);
+const boxMain = document.querySelector('.box_main');
+const containerMain = document.querySelector('#conteiner_main');
 
 let url = objUrl.randomUrl;
 
@@ -92,15 +94,19 @@ let showHideElements = (elem, state) => {
 	elem.style.display = state;
 };
 
+let showHideElemWithCSS = (elem, selector) => {
+	elem.classList.toggle(selector);
+};
+
 let clearActiveButton = (selector) => {
 	if (!conteiner.querySelector(`.${selector}`)) return;
 	conteiner.querySelector(`.${selector}`).classList.toggle(selector);
-}
+};
 
 let changeViewActiveButton = (elem, selector) => {
 	clearActiveButton(selector);
 	elem.classList.toggle(selector);
-}
+};
 
 let calcHoursPastUpdate = (obj, prop) => {
 	let dataUpdate = new Date(Date.parse(obj[prop]));
@@ -121,7 +127,7 @@ let getShowValueFromTextArea = (elem) => {
 let addElemToFavouriteList = (elem) => {
 	elem.classList.toggle('favourite');
 	let copyElem = elem.parentNode.cloneNode(true);
-	let keyForLocalStorage = copyElem.querySelector('.heart').id;
+
 	copyElem.querySelector('.heart').id = '';
 	copyElem.classList.add('back_color');
 	copyElem.firstChild.classList.add('message_change');
@@ -129,8 +135,11 @@ let addElemToFavouriteList = (elem) => {
 	if (copyElem.querySelector('.labelCategory')) {
 		copyElem.querySelector('.labelCategory').style.display = 'none';
 	}
-	
-	showHideElements(conteinerFavourite, 'flex');
+
+	if (!conteinerFavourite.classList.contains('visible')) {
+		showHideElemWithCSS(conteinerFavourite, 'visible');
+	}
+
 	conteinerFavouriteJokes.prepend(copyElem);
 	saveToLocalStorage(copyElem.parentNode);
 };
@@ -144,7 +153,6 @@ let removeElemFromFavouriteList = (elem) => {
 	});
 
 	if (listId.has(classElem)) listId.delete(classElem);
-	
 
 	document.querySelectorAll(`.${classElem}`).forEach((item) => {
 		if (item.id !== classElem) {
@@ -155,8 +163,9 @@ let removeElemFromFavouriteList = (elem) => {
 	});
 
 	if (!conteinerFavouriteJokes.hasChildNodes()) {
-		showHideElements(conteinerFavourite, 'none');
-	};
+		showHideElemWithCSS(conteinerFavourite, 'visible');
+	}
+
 	saveToLocalStorage(conteinerFavouriteJokes);
 };
 
@@ -176,15 +185,16 @@ function createListIdOfLocalStorage(elem) {
 
 function readFromLocalStorage() {
 	if (!localStorage.favouriteList) return;
-	
-	showHideElements(conteinerFavourite, 'flex');
+
+	showHideElemWithCSS(conteinerFavourite, 'visible');
 	conteinerFavouriteJokes.innerHTML = localStorage.getItem('favouriteList');
-	
+
 	createListIdOfLocalStorage(conteinerFavouriteJokes);
 }
 
 conteiner.addEventListener('click', () => {
-	if (radioSearch.checked && event.target === radioSearch) {
+	let elem = event.target;
+	if (radioSearch.checked && elem === radioSearch) {
 		showHideElements(fieldTextSearch, 'block');
 		buttonGet.disabled = true;
 	} else if (!radioSearch.checked) {
@@ -192,7 +202,7 @@ conteiner.addEventListener('click', () => {
 		fieldTextSearch.value = '';
 	}
 
-	if (radioCategories.checked && event.target === radioCategories) {
+	if (radioCategories.checked && elem === radioCategories) {
 		showHideElements(bubble_box, 'block');
 		clearActiveButton('active_button');
 		buttonGet.disabled = true;
@@ -205,25 +215,37 @@ conteiner.addEventListener('click', () => {
 		url = objUrl.randomUrl;
 	}
 
-	if (event.target.name === 'categoryButton') {
-		changeViewActiveButton(event.target, 'active_button');
-		url = objUrl.categoryUrl + event.target.value;
+	if (elem.name === 'categoryButton') {
+		changeViewActiveButton(elem, 'active_button');
+		url = objUrl.categoryUrl + elem.value;
 		buttonGet.disabled = false;
 	}
 
-	if (event.target.id === 'text_search') {
-		getShowValueFromTextArea(event.target);
+	if (elem.id === 'text_search') {
+		getShowValueFromTextArea(elem);
 	}
 
-	if (event.target.id === 'button_get') {
+	if (elem.id === 'button_get') {
 		buildElements(url, responsePreprocessing);
 	}
 
-	if (event.target.classList.contains('heart')) {
-		if (event.target.classList.contains('favourite')) {
-			removeElemFromFavouriteList(event.target);
+	if (elem.classList.contains('heart')) {
+		if (elem.classList.contains('favourite')) {
+			removeElemFromFavouriteList(elem);
 		} else {
-			addElemToFavouriteList(event.target);
+			addElemToFavouriteList(elem);
 		}
+	}
+
+	if (elem.className === 'button_main' || elem.className === 'open') {
+		showHideElemWithCSS(conteinerFavourite, 'tablet');
+		showHideElemWithCSS(boxMain, 'freezing');
+		showHideElemWithCSS(containerMain, 'color_freez');
+	}
+
+	if (elem.className === 'name_favourite' || elem.className === 'close') {
+		showHideElemWithCSS(conteinerFavourite, 'tablet');
+		showHideElemWithCSS(boxMain, 'freezing');
+		showHideElemWithCSS(containerMain, 'color_freez');
 	}
 });
