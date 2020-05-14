@@ -43,7 +43,7 @@ h2 {
 }
 
 #container_main {
-	min-width: 65%;
+	width: 100%;
 	min-height: 100%;
 	font-weight: normal;
 }
@@ -61,11 +61,13 @@ h2 {
 }
 
 .container_favourite {
+	max-width: 34%;
 	min-width: 34%;
 	min-height: 100%;
 	background: #f8f8f8;
 	display: none;
 	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+	transition: 0.5s all linear;
 }
 
 form {
@@ -99,8 +101,13 @@ label {
 }
 
 .check:checked {
-	border: 5px solid #333333;
+	background: url('../icons/circle.svg') center no-repeat;
+	border: 2px solid #333333;
 	box-sizing: border-box;
+}
+
+.check:hover {
+	border: 2px solid #333333;
 }
 
 #button_get {
@@ -136,6 +143,7 @@ label {
 	display: none;
 	box-sizing: border-box;
 	outline: none;
+	transition: 1s all linear;
 }
 
 ::placeholder {
@@ -149,14 +157,15 @@ label {
 }
 
 .categories {
+	max-width: 7.2em;
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	text-align: center;
 	color: #ababab;
 	font-size: 0.75em;
 	height: 1.8em;
-	margin-right: 3em;
-	margin-top: 3em;
+	margin-right: 1.5em;
+	margin-top: 1.5em;
 	border: 2px solid #f8f8f8;
 	box-sizing: border-box;
 	border-radius: 6px;
@@ -315,6 +324,10 @@ span {
 
 .visible {
 	display: flex;
+}
+
+.slowShow {
+	opacity: 1;
 }
 
 .freezing {

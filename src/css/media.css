@@ -44,16 +44,10 @@
 		left: 0;
 		right: 0;
    }
-
-   .categories {
-      max-width: 7.2em;
-      margin-right: 1.5em;
-      margin-top: 1.5em;
-   }
    
 }
 
-@media (max-width: 580px) {
+@media (max-width: 600px) {
    .container_favourite {
       min-width: 75%;
    }
@@ -81,3 +75,4 @@
       margin-bottom: 2.5em;
 	}
 }
+
