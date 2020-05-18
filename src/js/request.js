@@ -13,3 +13,5 @@ async function fetchAsync(url) {
 		console.error(e);
 	}
 }
+
+module.exports = { buildElements, fetchAsync };

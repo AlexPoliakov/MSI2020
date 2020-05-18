@@ -29,3 +29,13 @@ let listenerSetting = (elem, event, func) => {
 let saveToLocalStorage = (key, elem) => {
 	localStorage.setItem(key, elem.innerHTML);
 }
+
+module.exports = {
+	calcHoursPastUpdate,
+	showHideElements,
+	showHideElemWithClassName,
+	clearActiveButton,
+	changeViewActiveButton,
+	listenerSetting,
+	saveToLocalStorage,
+};
