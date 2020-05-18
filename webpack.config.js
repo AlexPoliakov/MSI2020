@@ -8,8 +8,28 @@ const TerserPlugin = require('terser-webpack-plugin');
 const Dev = process.env.NODE_ENV === 'development';
 const Prod = !Dev;
 
+const optimization = () => {
+	const config = {}
+	if (Prod) {
+		(config.minimize = true),
+			(config.minimizer = [
+				new OptimizeCssAssetsPlugin({ cssProcessorOptions: {
+						map: {
+							inline: false,
+							annotation: true,
+						},
+					},
+				}),
+				new TerserPlugin(),
+			]);
+	}
+	return config;
+}
+
+const devtool = () =>  Prod ? 'source-map' : '';
+
 module.exports = {
-	// devtool: 'source-map',
+	devtool: devtool(),
 	context: path.resolve(__dirname, 'src'),
 	entry: {
 		main: './js/index.js',
@@ -22,7 +42,7 @@ module.exports = {
 		contentBase: path.join(__dirname, 'docs'),
 		compress: true,
 		port: 4200,
-		hot: Dev
+		hot: Dev,
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
@@ -36,13 +56,7 @@ module.exports = {
 		}),
 	],
 
-	optimization: {
-		minimize: Prod,
-		minimizer: [
-			new OptimizeCssAssetsPlugin(),
-			new TerserPlugin(),
-		],
-	},
+	optimization: optimization(),
 
 	module: {
 		rules: [

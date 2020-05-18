@@ -28,7 +28,7 @@
     "build": "cross-env NODE_ENV=production webpack --mode production"
   },
   "dependencies": {
-    "@types/jest": "^25.2.2"
+    "@types/jest": "^25.2.3"
   },
   "name": "MSI",
   "version": "1.0.0",
