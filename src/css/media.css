@@ -1,4 +1,4 @@
-@media (min-width: 1020px) {
+@media (min-width: 1025px) {
 	.freezing {
 		position: relative;
 		pointer-events: all;
@@ -9,7 +9,7 @@
 	}
 }
 
-@media (max-width: 1020px) {
+@media (max-width: 1024px) {
 	.close {
 		display: inline-block;
 	}
@@ -58,7 +58,7 @@
 	}
 }
 
-@media (max-width: 450px) {
+@media (max-width: 480px) {
 	.container_favourite {
 		min-width: 100%;
 	}

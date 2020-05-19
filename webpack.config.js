@@ -9,27 +9,34 @@ const Dev = process.env.NODE_ENV === 'development';
 const Prod = !Dev;
 
 const optimization = () => {
-	const config = {}
+	const config = {
+		splitChunks: {
+			chunks: 'all',
+		}
+	}
 	if (Prod) {
 		(config.minimize = true),
 			(config.minimizer = [
-				new OptimizeCssAssetsPlugin({ cssProcessorOptions: {
+				new OptimizeCssAssetsPlugin({
+					cssProcessorOptions: {
 						map: {
 							inline: false,
 							annotation: true,
 						},
 					},
 				}),
-				new TerserPlugin(),
+				new TerserPlugin({
+					parallel: true,
+					cache: true,
+					sourceMap: true,
+				}),
 			]);
 	}
 	return config;
 }
 
-const devtool = () =>  Prod ? 'source-map' : '';
-
 module.exports = {
-	devtool: devtool(),
+	devtool: Prod ? 'source-map' : 'eval-source-map',
 	context: path.resolve(__dirname, 'src'),
 	entry: {
 		main: './js/index.js',
@@ -42,7 +49,6 @@ module.exports = {
 		contentBase: path.join(__dirname, 'docs'),
 		compress: true,
 		port: 4200,
-		hot: Dev,
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
@@ -57,6 +63,11 @@ module.exports = {
 	],
 
 	optimization: optimization(),
+	performance: {
+		hints: 'warning',
+		maxEntrypointSize: 400000,
+		maxAssetSize: 100000,
+	},
 
 	module: {
 		rules: [

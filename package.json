@@ -30,6 +30,7 @@
   "dependencies": {
     "@types/jest": "^25.2.3"
   },
+  "browserslist": "> 0.25%, not dead",
   "name": "MSI",
   "version": "1.0.0",
   "description": "MSI test",
